@@ -1,7 +1,7 @@
 available = [['[1]','[2]','[3]'],['[4]','[5]','[6]'],['[7]','[8]','[9]']]
 game_field = [['.']*3,['.']*3,['.']*3]
 
-# Функция вывода поля на экран
+# Вывод поля на экран
 def print_field():
     print(' ' * 12 + 'Выбор хода:')
     for i in range(3):
@@ -18,6 +18,22 @@ def choice():
         except ValueError:
             print('Введите целое число от 1 до 9!')
 
+# Проверка поля на победу игрока
+def Check_Win(table):
+    for i in range(3):
+        if table[i][0] == table[i][1] == table[i][2] != '.':
+            if table[i][0] == 'x': return 1
+            else: return 2
+        if table[0][i] == table[1][i] == table[2][i] != '.':
+            if table[0][i] == 'x': return 1
+            else: return 2
+        if table[0][0] == table[1][1] == table[2][2] != '.':
+            if table[0][i] == 'x': return 1
+            else: return 2
+        if table[0][2] == table[1][1] == table[2][0] != '.':
+            if table[0][i] == 'x': return 1
+            else: return 2
+    return 0
 
 # Начало игры
 print('Игра началась!\n')
@@ -44,7 +60,16 @@ while not game_over:
     print_field()
 
     #проверка поля на победу игрока
-    game_over = True
+    check = Check_Win(game_field)
+    if check == 1:
+        print('\nИгрок 2 победил!')
+        game_over = True
+    elif check == 2:
+        print('\nИгрок 1 победил!')
+        game_over = True
+    elif turn == 9:
+        print('\nНичья!')
+        game_over = True
 
 # Конец игры
 print('\nИгра окончена!')
