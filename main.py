@@ -7,6 +7,18 @@ def print_field():
     for i in range(3):
         print(*game_field[i] + [' '] * 3 + available[i])
 
+#Обработка ввода пользователя
+def choice():
+    while True:
+        try:
+            num = int(input()) - 1
+            if 0 <= num <= 8:
+                return (num // 3, num % 3)
+            print('Недопустимое значение! (1-9)')
+        except ValueError:
+            print('Введите целое число от 1 до 9!')
+
+
 # Начало игры
 print('Игра началась!\n')
 print_field()
@@ -16,9 +28,18 @@ turn = 0
 
 while not game_over:
     print(f'Ход игрока {turn%2+1}:')
-    #перевод ввода пользователя в индекс ячейки
+    row, col = choice()  # перевод ввода игрока в индекс ячейки
+    while available[row][col] == '[ ]':
+        print("Место занято!")
+        row, col = choice()
 
     #размещение хода игрока в ячейку
+    if turn % 2 == 1:
+        game_field[row][col] = 'o'
+    else:
+        game_field[row][col] = 'x'
+    available[row][col] = '[ ]'
+    turn += 1
 
     print_field()
 
